@@ -2,12 +2,12 @@ var socket = io('/');
 
 socket.on('getLastMsgs', function(data) {
   data.forEach(function(item) {
-    $('.msgs').prepend(format(item));
+    $('.msgs').prepend(escapeHtml(format(item)));
   });
 });
 
 socket.on('newMsg', function(data) {
-  $('.msgs').append(format(data, data.nickname === $('#nickname').val()));
+  $('.msgs').append(escapeHtml(format(data, data.nickname === $('#nickname').val())));
 });
 
 $('#send').click(() => {
@@ -32,3 +32,12 @@ function format(item, isColored) {
 
   return str + new Date(item.date).toLocaleTimeString() + '] ' + item.nickname + ' ' + ' > ' + item.msg + '</p>';
 }
+
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }

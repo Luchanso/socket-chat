@@ -1,6 +1,4 @@
-console.log('hello world');
-
-var socket = io('http://localhost:22079');
+var socket = io('/');
 
 socket.on('getLastMsgs', function(data) {
   data.forEach(function(item) {

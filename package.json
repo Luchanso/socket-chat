@@ -1,0 +1,22 @@
+{
+  "name": "traning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha -t 2000 --reporter nyan"
+  },
+  "author": "Loutchansky Oleg",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.13",
+    "socket.io": "^1.4.5",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1"
+  }
+}

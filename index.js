@@ -1,8 +1,10 @@
 'use strict';
 
-require('./src/express');
+const port = process.env.PORT || 80;
 
-let io = require('socket.io')(22079),
+let app = require('./src/express'),
+  server = require('http').Server(app),
+  io = require('socket.io')(server),
   winston = require('winston'),
   Msg = require('./src/model/msg');
 
@@ -33,4 +35,8 @@ io.on('connection', (socket) => {
         socket.emit('getLastMsgs', result);
       });
   });
+});
+
+server.listen(port, () => {
+  winston.info(`App run on 0.0.0.0:${port}`);
 });

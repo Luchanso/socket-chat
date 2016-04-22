@@ -2,12 +2,12 @@ var socket = io('/');
 
 socket.on('getLastMsgs', function(data) {
   data.forEach(function(item) {
-    $('.msgs').prepend(escapeHtml(format(item)));
+    $('.msgs').prepend(format(item));
   });
 });
 
 socket.on('newMsg', function(data) {
-  $('.msgs').append(escapeHtml(format(data, data.nickname === $('#nickname').val())));
+  $('.msgs').append(format(data, data.nickname === $('#nickname').val()));
 });
 
 $('#send').click(() => {
@@ -30,7 +30,7 @@ function format(item, isColored) {
   else
     str = '<p style="color: blue"> [';
 
-  return str + new Date(item.date).toLocaleTimeString() + '] ' + item.nickname + ' ' + ' > ' + item.msg + '</p>';
+  return str + new Date(item.date).toLocaleTimeString() + '] ' + escapeHtml(item.nickname) + ' ' + ' > ' + escapeHtml(item.msg) + '</p>';
 }
 
 function escapeHtml(unsafe) {

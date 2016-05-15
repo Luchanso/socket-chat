@@ -1,4 +1,4 @@
-var socket = io('/');
+var socket = io('/', {transports: ['websocket']});
 
 socket.on('getLastMsgs', function(data) {
   data.forEach(function(item) {

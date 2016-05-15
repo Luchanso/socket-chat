@@ -10,9 +10,16 @@
   "author": "Loutchansky Oleg",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.1",
+    "connect-redis": "^3.0.2",
+    "cookie": "^0.2.3",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "mongoose": "^4.4.13",
+    "redis": "^2.6.0-2",
     "socket.io": "^1.4.5",
+    "socket.io-redis": "^1.0.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {

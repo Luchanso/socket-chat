@@ -14,8 +14,6 @@ let app = require('./src/express'),
   redis = require('redis'),
   Msg = require('./src/model/msg');
 
-let client = redis.createClient();
-
 winston.info('v2');
 
 function addRedisAdapter(io) {
@@ -38,7 +36,6 @@ server.listen(port, () => {
 });
 
 addRedisAdapter(io);
-console.log('Redis active');
 io.on('connection', (socket) => {
   socket.on('send', (data) => {
     let nickname = data.nickname;
@@ -46,8 +43,9 @@ io.on('connection', (socket) => {
 
     //socket.handshake.session.nickname = nickname;
     //socket.nickname = nickname;
-    if (nickname == 'luchanso')
-      client.set(nickname, socket.id);
+    if (nickname == 'luchanso') {
+      socket.join('luchanso');
+    }
 
     if (!cluster.isMaster)
       winston.info(`${data.nickname} send: ${data.msg} workerID: ${cluster.worker.id}`);
@@ -61,17 +59,10 @@ io.on('connection', (socket) => {
       .then((msg) => {
         console.log(msg.msg);
         if (msg.msg == 'luchanso')
-          client.get('luchanso', function(err, socketId) {
-            console.log(socketId);
-            if (err) throw err;
-
-            try {
-              io.sockets.connected[socketId].emit('newMsg', msg);
-            } catch (e) {
-              console.log(e);
-            }
-          }); 
-        io.emit('newMsg', msg);        
+          io.sockets.in('luchanso').emit('newMsg', msg);
+        else {        
+          io.emit('newMsg', msg);
+        }
       })
       .catch((err) => {
         winston.error(err);
